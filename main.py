@@ -4,7 +4,7 @@ from generator_html import generate_html_file
 
 class CustomHTTPRequestHandler(SimpleHTTPRequestHandler):
     def do_GET(self):
-        products = read_and_clean_excel('wine3.xlsx')
+        products = read_and_clean_excel('xlsx_file/wine3.xlsx')
         wines_dict = {}
         special_offers = set()
         
@@ -23,5 +23,5 @@ class CustomHTTPRequestHandler(SimpleHTTPRequestHandler):
 if __name__ == '__main__':
     server_address = ('0.0.0.0', 8000)
     httpd = HTTPServer(server_address, CustomHTTPRequestHandler)
-    print('Server is ready')
+    print(f'http://{server_address[0]}:{server_address[1]}')
     httpd.serve_forever()
