@@ -1,18 +1,23 @@
 from http.server import HTTPServer, SimpleHTTPRequestHandler
-from reader import read_excel_file
-from generator_html import generate_html
+from reader import read_and_clean_excel
+from generator_html import generate_html_file
 
 class CustomHTTPRequestHandler(SimpleHTTPRequestHandler):
     def do_GET(self):
-        products = read_excel_file('wine2 (2).xlsx')
+        products = read_and_clean_excel('wine3.xlsx')
         wines_dict = {}
+        special_offers = set()
+        
         for product in products:
             category = product['Категория']
             if category in wines_dict:
                 wines_dict[category].append(product)
             else:
                 wines_dict[category] = [product]
-        generate_html(wines_dict, age=10, year_suffix='лет')
+            if product.get('Акция') == 'Выгодное предложение':
+                special_offers.add(product['Название'])
+        
+        generate_html_file(wines_dict=wines_dict, special_offers=special_offers, age=10, year_suffix='лет')
         super().do_GET()
 
 if __name__ == '__main__':
