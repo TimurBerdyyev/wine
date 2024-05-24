@@ -1,11 +1,17 @@
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from reader import read_and_clean_excel
 from generator_html import generate_html_file
+from year_suffix import year_suffix
 from collections import defaultdict
 import atexit
 import os
+from datetime import datetime
 
-def setup_wine_data(data_file, special_offer):
+def get_winery_age(foundation_year):
+    current_year = datetime.now().year
+    return current_year - foundation_year
+
+def setup_wine_data(data_file, special_offer, foundation_year):
     products = read_and_clean_excel(data_file)
     wines_dict = defaultdict(list)
     special_offers = set()
@@ -16,7 +22,10 @@ def setup_wine_data(data_file, special_offer):
         if product.get('Акция') == special_offer:
             special_offers.add(product['Название'])
     
-    generate_html_file(wines_dict=wines_dict, special_offers=special_offers, age=10, year_suffix='лет')
+    age = get_winery_age(foundation_year)
+    year_suffix_age= year_suffix(age)
+    
+    generate_html_file(wines_dict=wines_dict, special_offers=special_offers, age=age, year_suffix=year_suffix_age)
 
 def cleanup():
     if os.path.exists('index.html'):
@@ -25,8 +34,9 @@ def cleanup():
 def main():
     data_file = os.getenv('WINE_DATA_FILE', 'xlsx_file/wine3.xlsx')
     special_offer = os.getenv('SPECIAL_OFFER', 'Выгодное предложение')
+    foundation_year = int(os.getenv('FOUNDATION_YEAR', 1921))
     
-    setup_wine_data(data_file, special_offer)
+    setup_wine_data(data_file, special_offer, foundation_year)
     
     server_address = ('0.0.0.0', 8000)
     httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
