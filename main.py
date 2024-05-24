@@ -1,15 +1,12 @@
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from reader import read_and_clean_excel
 from generator_html import generate_html_file
-
+from collections import defaultdict
 import atexit
 import os
 
-from collections import defaultdict
-
-
-def setup_wine_data():
-    products = read_and_clean_excel('xlsx_file/wine3.xlsx')
+def setup_wine_data(data_file):
+    products = read_and_clean_excel(data_file)
     wines_dict = defaultdict(list)
     special_offers = set()
     
@@ -26,13 +23,16 @@ def cleanup():
     if os.path.exists('index.html'):
         os.remove('index.html')
 
+
 def main():
-    setup_wine_data()
+    data_file = os.getenv('WINE_DATA_FILE', 'xlsx_file/wine3.xlsx')
+    setup_wine_data(data_file)
     server_address = ('0.0.0.0', 8000)
     httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
     atexit.register(cleanup)
-    print(f'Сайт доступен по адрессу  http://{server_address[0]}:{server_address[1]}')
+    print(f'Server is running at http://{server_address[0]}:{server_address[1]}')
     httpd.serve_forever()
+
 
 if __name__ == '__main__':
     main()
