@@ -13,19 +13,19 @@ def get_winery_age(foundation_year):
 
 def create_wine_html_report(data_file, special_offer, foundation_year):
     products = read_and_clean_excel(data_file)
-    wines_dict = defaultdict(list)
+    wine_categories = defaultdict(list)
     special_offers = set()
 
     for product in products:
         category = product['Категория']
-        wines_dict[category].append(product)
+        wine_categories[category].append(product)
         if product.get('Акция') == special_offer:
             special_offers.add(product['Название'])
 
     age = get_winery_age(foundation_year)
     year_suffix_age= year_suffix(age)
 
-    generate_html_file(wines_dict=wines_dict, special_offers=special_offers, age=age, year_suffix=year_suffix_age)
+    generate_html_file(wine_categories=wine_categories, special_offers=special_offers, age=age, year_suffix=year_suffix_age)
 
 def cleanup():
     if os.path.exists('index.html'):
