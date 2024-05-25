@@ -34,7 +34,7 @@ def cleanup():
 def main():
     data_file = os.getenv('WINE_DATA_FILE', 'xlsx_file/wine3.xlsx')
     special_offer = os.getenv('SPECIAL_OFFER', 'Выгодное предложение')
-    foundation_year = int(os.getenv('FOUNDATION_YEAR', 1921))
+    foundation_year = int(os.getenv('FOUNDATION_YEAR', 1923))
 
     create_wine_html_report(data_file, special_offer, foundation_year)
 
