@@ -1,7 +1,7 @@
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from reader import read_and_clean_excel
 from generator_html import generate_html_file
-from year_suffix import year_suffix
+from year_suffix import calculate_year_suffix
 from collections import defaultdict
 import atexit
 import os
@@ -23,7 +23,7 @@ def create_wine_html_report(data_file, special_offer, foundation_year):
             special_offers.add(product['Название'])
 
     age = get_winery_age(foundation_year)
-    year_suffix_age= year_suffix(age)
+    year_suffix_age= calculate_year_suffix(age)
 
     generate_html_file(wine_categories=wine_categories, special_offers=special_offers, age=age, year_suffix=year_suffix_age)
 
