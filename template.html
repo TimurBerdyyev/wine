@@ -85,28 +85,28 @@
     <div id="products"></div>
     <div class="site-section">
       <div class="container">
-        {% for wine_category, wines in wines_dict.items() %}
-        <div class="row mb-5">
-          <div class="col-12 section-title text-center mb-5">
-            <h2 class="d-block">{{ wine_category }}</h2>
-          </div>
-        </div>
-        <div class="row">
-          {% for wine in wines %}
-          <div class="col-lg-4 mb-5 col-md-6">
-            <div class="wine_v_1 text-center pb-4 pt-5" style="position:relative;">
-              <img src="images/{{ wine['Картинка'] }}" alt="Image" class="img-fluid">
-              {% if wine['Название'] in special_offers %}
-              <img src="assets/profitable.png" style="width:10rem;height:10rem;position:absolute;right:-20px;top:-20px;">
-              {% endif %}
-              <div>
-                <h3 class="heading mt-3 mb-3 text-dark">{{ wine['Название'] }}</h3>
-                <p>{{ wine['Сорт'] }}<br/><span class="price">{{ wine['Цена'] }}</span></p>
-              </div>
+        {% for wine_category, wines in wine_categories.items() %}
+          <div class="row mb-5">
+            <div class="col-12 section-title text-center mb-5">
+              <h2 class="d-block">{{ wine_category }}</h2>
             </div>
           </div>
-          {% endfor %}
-        </div>
+          <div class="row">
+            {% for wine in wines %}
+              <div class="col-lg-4 mb-5 col-md-6">
+                <div class="wine_v_1 text-center pb-4 pt-5" style="position:relative;">
+                  <img src="images/{{ wine['Картинка'] }}" alt="Image" class="img-fluid">
+                  {% if wine['Название'] in special_offers %}
+                    <img src="assets/profitable.png" style="width:10rem;height:10rem;position:absolute;right:-20px;top:-20px;">
+                  {% endif %}
+                  <div>
+                    <h3 class="heading mt-3 mb-3 text-dark">{{ wine['Название'] }}</h3>
+                    <p>{{ wine['Сорт'] }}<br/><span class="price">{{ wine['Цена'] }}</span></p>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
         {% endfor %}
       </div>
     </div>
@@ -174,20 +174,19 @@
   <div id="loader" class="show fullscreen">
     <svg class="circular" width="48px" height="48px">
       <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
-      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#ff5e15"/>
+      <circle class="path" cx="24" cy="24" r="22" class="path" fill="none" stroke-width="4" stroke="#f4b214"/>
     </svg>
   </div>
 
   <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
   <script src="js/jquery-ui.js"></script>
+  <script src="js/popper.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.countdown.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
   <script src="js/aos.js"></script>
-  <script src="js/jquery.sticky.js"></script>
   <script src="js/main.js"></script>
-</body>
 
+</body>
 </html>

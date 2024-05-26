@@ -27,9 +27,11 @@ def create_wine_html_report(data_file, special_offer, foundation_year):
 
     generate_html_file(wine_categories=wine_categories, special_offers=special_offers, age=age, year_suffix=year_suffix_age)
 
+
 def cleanup():
     if os.path.exists('index.html'):
         os.remove('index.html')
+
 
 def main():
     data_file = os.getenv('WINE_DATA_FILE', 'xlsx_file/wine3.xlsx')
